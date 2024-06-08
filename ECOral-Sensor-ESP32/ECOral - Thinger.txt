@@ -1,0 +1,84 @@
+#include <ThingerESP32.h>
+#include <DHT.h>
+ 
+#define DHTPIN 17
+#define DHTTYPE DHT11
+ 
+DHT dht(DHTPIN, DHTTYPE);
+ 
+// Insira as credenciais do dispositivo configurado na plataforma
+#define USERNAME "ReginaPompeo"
+#define DEVICE_ID "ECOral"
+#define DEVICE_CREDENTIAL "ECOral12345"
+ 
+// Insira as credenciais da sua rede WiFi
+#define SSID "ReginaP"
+#define SSID_PASSWORD "Gina0509"
+ 
+ThingerESP32 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL);
+ 
+float temp, ph, condutividade, turbidez, h2o, nivel, numeroRandom;
+ 
+void setup() {  
+  Serial.begin(115200);  
+  dht.begin();   
+  thing.add_wifi(SSID, SSID_PASSWORD);
+  randomSeed(analogRead(0)); // Inicializa o gerador de números aleatórios com um valor aleatório
+}
+ 
+void loop() {
+  temp = random(-5000, 5001) / 50.0; // Valor aleatório para temperatura entre -50.00 e 50.00
+  ph = random(0, 1401) / 14.0; // Valor aleatório para pH entre 0.00 e 14.00
+  condutividade = random(30000, 70001) / 1000.0; // Valor aleatório para condutividade aleatório entre 30,000 e 70,000
+  turbidez = random(0, 601) / 60.0; // Valor aleatório para turbidez entre 0.0 e 60.0
+  h2o = random(0, 101) / 10.0; // Valor aleatório para H2O entre 0.0 e 10.0
+  nivel = random(0, 101); // Valor aleatório para nível entre 0 e 100
+  numeroRandom = random(0, 101); // Valor aleatório para numeroRandom entre 0 e 100
+ 
+  thing["Grupo"] >> outputValue("ECOral - Sensor de poluição da água");
+ 
+  thing["Grupo"] >> outputValue("ECOral - Sensor de poluição da água");
+  //Textos explicativos sobre fatores de poluição na água
+  thing["Text Temperatura"] >> outputValue("A temperatura da água é crucial para a vida marinha, pois influencia a distribuição das espécies nos oceanos. Muitos organismos marinhos têm uma faixa estreita de tolerância térmica e podem sofrer estresse térmico com mudanças bruscas. A temperatura afeta a solubilidade do oxigênio na água, essencial para a respiração dos peixes e outros seres aquáticos. Além disso, regula processos metabólicos e reprodutivos, impactando o crescimento e a sobrevivência das populações marinhas. Mudanças na temperatura da água, causadas por fenômenos naturais ou pela atividade humana, podem levar a desequilíbrios ecológicos significativos.");
+  thing["Text PH"] >> outputValue("O pH da água é uma medida que indica a acidez ou alcalinidade da mesma, numa escala que vai de 0 a 14, sendo 7 considerado neutro. Quando o pH da água se desvia desses valores, pode indicar poluição. A água poluída muitas vezes apresenta pH fora da faixa normal devido à presença de substâncias ácidas ou alcalinas provenientes de fontes poluentes, como efluentes industriais, esgotos não tratados, fertilizantes agrícolas e resíduos de mineração. Essas substâncias alteram o equilíbrio químico da água, afetando a saúde dos ecossistemas aquáticos. Por exemplo, águas muito ácidas podem prejudicar a reprodução e a sobrevivência de peixes e outras formas de vida aquática, enquanto águas alcalinas podem afetar a disponibilidade de nutrientes essenciais para as plantas aquáticas e outros organismos.");
+  thing["Text Condutividade Elétrica"] >> outputValue("A condutividade elétrica da água é a capacidade dela de conduzir eletricidade, influenciada pela presença de íons dissolvidos. Quando a água está poluída, a condutividade aumenta devido a substâncias condutoras, como sais minerais e metais dissolvidos. Fontes de poluição, como escoamento agrícola e industrial, contribuem para esse aumento. Altos níveis de condutividade podem indicar poluição e afetar negativamente a qualidade da água e a vida aquática.");
+  thing["Text Turbidez"] >> outputValue("Turbidez refere-se à medida da quantidade de partículas suspensas na água, que podem incluir sedimentos, argila, matéria orgânica e microorganismos. Quando a água está poluída, essas partículas geralmente aumentam devido à erosão do solo, descarga de esgotos, resíduos industriais ou atividades agrícolas. Essas fontes de poluição aumentam a turbidez da água, o que não apenas prejudica a estética, mas também afeta negativamente a vida aquática, diminuindo a penetração da luz solar necessária para a fotossíntese das plantas aquáticas e interferindo na alimentação e na respiração dos organismos aquáticos.");
+  thing["Text H2O"] >> outputValue("O oxigênio dissolvido na água é essencial para a sobrevivência da vida aquática, pois é utilizado pelos organismos para respiração. Quando a água está poluída, os níveis de oxigênio podem diminuir devido a várias razões. Por exemplo, a decomposição de matéria orgânica por bactérias consome oxigênio, reduzindo sua disponibilidade para outros organismos. Além disso, poluentes como nutrientes em excesso, resíduos industriais e esgoto podem estimular o crescimento excessivo de algas, que consomem oxigênio quando morrem e se decompõem. Isso pode levar a condições de baixo oxigênio, prejudicando a vida aquática e resultando em problemas como a eutrofização e a morte de peixes.");
+  thing["Text Nível da Água"] >> outputValue("Monitorar o nível da água é crucial para manter sua qualidade diante das poluições. Esse acompanhamento permite identificar mudanças nos padrões de poluição ao longo do tempo, possibilitando a implementação de medidas de controle e prevenção mais eficazes. Além disso, o monitoramento contínuo ajuda a identificar fontes de poluição e avaliar os impactos das atividades humanas no ecossistema aquático. Dessa forma, é possível tomar medidas corretivas e preventivas para proteger a água e os organismos que dela dependem. Em resumo, o monitoramento do nível da água desempenha um papel fundamental na preservação dos recursos hídricos e na manutenção de ecossistemas aquáticos saudáveis.");
+  // Dados de exemplo das variáveis
+  thing["Dados exemplares 1 - Temperatura"] >> outputValue("Água não poluída: Geralmente entre 10°C e 25°C");
+  thing["Dados exemplares 2 - Temperatura"] >> outputValue("Água poluída: Aproximadamente 30°C");
+  thing["Dados exemplares 1 - PH"] >> outputValue("Água não poluída: Geralmente 8.0 a 8.5 pH");
+  thing["Dados exemplares 2 - PH"] >> outputValue("Água poluída: Geralmente 7.0 a 8.0 pH");
+  thing["Dados exemplares 1 - Condutividade elétrica"] >> outputValue("Água não poluída: Aproximadamente entre 50 µS/cm a 55 µS/cm.");
+  thing["Dados exemplares 2 - Condutividade elétrica"] >> outputValue(" Água poluída: Aproximadamente >55 µS/cm.");
+  thing["Dados exemplares 1 - Turbidez"] >> outputValue("Água não poluída: Aproximadamente < 20 NTU");
+  thing["Dados exemplares 2 - Turbidez"] >> outputValue(" Água poluída: Geralmente entre 20 a 100 NTU");
+  thing["Dados exemplares 1 - H2O"] >> outputValue("Água não poluída: Aproximadamente > 6 mg/L");
+  thing["Dados exemplares 2 - H2O"] >> outputValue(" Água poluída: Aproximadamente < 2 mg/L");
+ 
+  // Valores Determinados
+  thing["Temperatura"] >> outputValue(temp);
+  thing["PH"] >> outputValue(ph);
+  thing["Condutividade elétrica"] >> outputValue(condutividade);
+  thing["Turbidez"] >> outputValue(turbidez);
+  thing["H2O"] >> outputValue(h2o);
+  thing["Nível da água"] >> outputValue(nivel);
+  thing["Randomico"] >> outputValue(numeroRandom);
+  Serial.print("Temperatura: ");
+  Serial.println(temp);
+  Serial.print("PH: ");
+  Serial.println(ph);
+  Serial.print("Condutividade elétrica: ");
+  Serial.println(condutividade);
+  Serial.print("Turbidez: ");
+  Serial.println(turbidez);
+  Serial.print("H2O: ");
+  Serial.println(h2o);
+  Serial.print("Nível da água: ");
+  Serial.println(nivel);
+  Serial.print("Random: ");
+  Serial.println(numeroRandom); 
+  thing.handle();
+  delay(150);
+}
