@@ -42,7 +42,7 @@ Desenvolvemos um sensor de monitoramento marinho com o intuito de analisar vari√
 ![image](https://github.com/ReginaPompeo/ECOral-Sensor_IOT/assets/111822109/6e0edfde-cdb6-40a4-9e36-3d9176ea80fd)
 
 ## V√≠deo Pitch 
-https://youtu.be/LThNNNmVYJk?si=JA80S1EZbj8pG81I
+[https://youtu.be/LThNNNmVYJk?si=JA80S1EZbj8pG81I](https://www.youtube.com/watch?v=hcEdHt2zjhM)
 
 ## RM's
 
